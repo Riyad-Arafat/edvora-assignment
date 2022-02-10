@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Filter } from "../../src/components/filter";
 import { ProductsSlider } from "../../src/components/slider";
 import { Product } from "../../src/types/product";
 
@@ -15,6 +16,8 @@ export default function Products({ categories }: { categories: Categories }) {
   return (
     <>
       <Title>Products</Title>
+
+      <Filter />
 
       {Object.keys(categories).map((brandName, index) => (
         <ProductsSlider

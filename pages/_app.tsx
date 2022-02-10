@@ -10,7 +10,7 @@ export const GlobalStyles = createGlobalStyle`
     color: #fff;
     height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    overflow-x: hidden;
   }
 
   .swiper{
@@ -34,6 +34,15 @@ export const GlobalStyles = createGlobalStyle`
     right: 24px;
 
   }
+
+  .expandable {
+    overflow: hidden;
+    transition: all 0.25s ease-in-out;
+    height: 0;
+
+  }
+
+
 `;
 
 function MyApp({ Component, pageProps }: AppProps) {
