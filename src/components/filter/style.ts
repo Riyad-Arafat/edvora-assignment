@@ -9,6 +9,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  @media (max-width: 1380px) {
+    width: auto;
+    flex-direction: column;
+  }
 `;
 export const SearchInput = styled.input`
   padding: 12px 0;

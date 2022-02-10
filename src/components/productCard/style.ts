@@ -4,12 +4,16 @@ export const Card = styled.figure`
   background-color: #232323;
   color: #fff;
   width: 220px;
-  /* height: 150px; */
+
   border-radius: 4.68775px;
   transition: 0.15s padding ease;
   cursor: pointer;
   &:hover {
     padding: 0px 5px;
+  }
+  @media (max-width: 798px) {
+    width: 95%;
+    margin: 15px 0px;
   }
 `;
 export const Image = styled.img`
@@ -70,7 +74,7 @@ export const Location = styled.td`
   font-size: 13px;
   line-height: 16px;
   color: rgba(255, 255, 255, 0.6);
-  width: 88px;
+  width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
   display: inline-block;
@@ -93,13 +97,4 @@ export const Discription = styled.figcaption`
 export const Footer = styled.div`
   padding-inline: 11px;
   padding-bottom: 14px;
-  table {
-    width: 100%;
-    tr {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      width: 100%;
-    }
-  }
 `;

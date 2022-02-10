@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -19,7 +19,6 @@ type SliderProps = {
 };
 
 const Brand = styled.div`
-  width: 100%;
   border-bottom: 1px solid rgba(203, 203, 203, 0.5);
   margin-bottom: 12px;
   margin-inline-start: 15px;
@@ -33,20 +32,41 @@ const Brand = styled.div`
   }
 `;
 
+const SmallViewContainer = styled.div`
+  background-color: #000;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+`;
+
 export const ProductsSlider = React.memo(
   ({ products, brandName }: SliderProps) => {
     const [classes, setClasses] = useState<any>({});
     const [loading, setLoading] = useState(true);
+    const [windowSize, setwindowSize] = useState(0);
 
     useEffect(() => {
       const nextBtn = "next" + Math.random().toString(16).slice(2);
       const prevBtn = "prev" + Math.random().toString(16).slice(2);
 
       setClasses({ nextBtn, prevBtn });
-      setLoading(false);
     }, []);
 
-    if (!loading)
+    useLayoutEffect(() => {
+      console.log("1047");
+      setwindowSize(window.innerWidth);
+      window.addEventListener("resize", () => {
+        console.log("resdasf");
+        setwindowSize(innerWidth);
+      });
+      setLoading(false);
+
+      return () => {
+        window.removeEventListener("resize", () => {}, false);
+      };
+    }, []);
+    if (!loading && windowSize > 798)
       return (
         <div style={{ position: "relative" }}>
           <Brand>
@@ -54,7 +74,15 @@ export const ProductsSlider = React.memo(
           </Brand>
 
           <Swiper
-            slidesPerView={5}
+            slidesPerView={
+              windowSize > 1860
+                ? 5
+                : windowSize > 1047
+                ? 4
+                : windowSize > 798
+                ? 3
+                : 0
+            }
             spaceBetween={0}
             freeMode={true}
             navigation={{
@@ -77,6 +105,18 @@ export const ProductsSlider = React.memo(
         </div>
       );
 
-    return null;
+    return (
+      <>
+        <Brand>
+          <h1>{brandName}</h1>
+        </Brand>
+        <SmallViewContainer>
+          {products.map((prod, index) => (
+            <ProductCard key={index} product={prod} />
+          ))}
+        </SmallViewContainer>
+        ;
+      </>
+    );
   }
 );

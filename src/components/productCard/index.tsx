@@ -39,18 +39,15 @@ export const ProductCard = ({ product }: { product: Product }) => {
       </Header>
 
       <Footer>
-        <table>
-          <tbody>
-            <tr>
-              <Location>
-                {product.address.state} {product.address.city}
-              </Location>
-              <Td>
-                Date: <DateSpan>{date}</DateSpan>
-              </Td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="d-flex">
+          <Location>
+            {product.address.state} {product.address.city}
+          </Location>
+          <Td>
+            Date: <DateSpan>{date}</DateSpan>
+          </Td>
+        </div>
+
         <Discription>{product.discription}</Discription>
       </Footer>
     </Card>

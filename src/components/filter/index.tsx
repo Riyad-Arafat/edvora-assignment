@@ -8,7 +8,6 @@ import {
 } from "./style";
 
 export const Filter = () => {
-  const [brandOpen, setBrandOpen] = useState(false);
   return (
     <Container>
       <SearchInput placeholder="Filter" />
@@ -41,15 +40,18 @@ const Brand = () => {
           </svg>
         </span>
       </DropDownButton>
-      <DropDownMenu
-        className={`expandable ${brandOpen ? "active" : ""}`}
-        id="nav"
-      >
-        <DropDownItem>dsgmkorg</DropDownItem>
-        <DropDownItem>dsgmkorg</DropDownItem>
-        <DropDownItem>dsgmkorg</DropDownItem>
-        <DropDownItem>dsgmkorg</DropDownItem>
-        <DropDownItem>dsgmkorg</DropDownItem>
+      <DropDownMenu className={`expandable ${brandOpen ? "active" : ""}`}>
+        <div style={{ width: "100%" }}>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+        </div>
       </DropDownMenu>
     </div>
   );
@@ -76,15 +78,18 @@ const State = () => {
           </svg>
         </span>
       </DropDownButton>
-      <DropDownMenu
-        className={`expandable ${brandOpen ? "active" : ""}`}
-        id="nav"
-      >
-        <DropDownItem>dsgmkorg</DropDownItem>
-        <DropDownItem>dsgmkorg</DropDownItem>
-        <DropDownItem>dsgmkorg</DropDownItem>
-        <DropDownItem>dsgmkorg</DropDownItem>
-        <DropDownItem>dsgmkorg</DropDownItem>
+      <DropDownMenu className={`expandable ${brandOpen ? "active" : ""}`}>
+        <div style={{ width: "100%" }}>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+        </div>
       </DropDownMenu>
     </div>
   );
@@ -111,15 +116,18 @@ const City = () => {
           </svg>
         </span>
       </DropDownButton>
-      <DropDownMenu
-        className={`expandable ${brandOpen ? "active" : ""}`}
-        id="nav"
-      >
-        <DropDownItem>dsgmkorg</DropDownItem>
-        <DropDownItem>dsgmkorg</DropDownItem>
-        <DropDownItem>dsgmkorg</DropDownItem>
-        <DropDownItem>dsgmkorg</DropDownItem>
-        <DropDownItem>dsgmkorg</DropDownItem>
+      <DropDownMenu className={`expandable ${brandOpen ? "active" : ""}`}>
+        <div style={{ width: "100%" }}>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+          <DropDownItem>dsgmkorg</DropDownItem>
+        </div>
       </DropDownMenu>
     </div>
   );

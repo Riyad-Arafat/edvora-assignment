@@ -7,9 +7,10 @@ import { createGlobalStyle } from "styled-components";
 export const GlobalStyles = createGlobalStyle`
   body {
     background-color: #232323;
+    position: relative;
     color: #fff;
     height: 100vh;
-    width: 100vw;
+    /* width: 100vw; */
     overflow-x: hidden;
   }
 
@@ -31,15 +32,21 @@ export const GlobalStyles = createGlobalStyle`
     top: 61%;
   }
   .swiper-button-next{
-    right: 24px;
+    right: 5px;
 
   }
 
   .expandable {
-    overflow: hidden;
     transition: all 0.25s ease-in-out;
     height: 0;
 
+  }
+
+  .d-flex{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
   }
 
 

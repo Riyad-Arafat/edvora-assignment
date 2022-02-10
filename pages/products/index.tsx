@@ -1,11 +1,44 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import { Filter } from "../../src/components/filter";
 import { ProductsSlider } from "../../src/components/slider";
 import { Product } from "../../src/types/product";
 
 const Title = styled.h1`
-  /* color: black; */
   font-size: 50px;
+  margin-top: 0;
+`;
+
+const Container = styled.main`
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  @media (max-width: 1380px) {
+    flex-direction: column;
+  }
+`;
+
+const FilterCol = styled.div`
+  position: relative;
+  width: 25%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  @media (max-width: 1380px) {
+    width: 100%;
+    display: block;
+  }
+`;
+
+const ProductsCol = styled.div`
+  position: relative;
+  width: 75%;
+  @media (max-width: 1380px) {
+    width: 100%;
+  }
 `;
 
 type Categories = {
@@ -13,19 +46,27 @@ type Categories = {
 };
 
 export default function Products({ categories }: { categories: Categories }) {
+  useEffect(() => {
+    console.log(categories);
+  });
   return (
     <>
-      <Title>Products</Title>
+      <Container>
+        <FilterCol>
+          <Filter />
+        </FilterCol>
+        <ProductsCol>
+          <Title>Products</Title>
 
-      <Filter />
-
-      {Object.keys(categories).map((brandName, index) => (
-        <ProductsSlider
-          key={index}
-          products={categories[brandName]}
-          brandName={brandName}
-        />
-      ))}
+          {Object.keys(categories).map((brandName, index) => (
+            <ProductsSlider
+              key={index}
+              products={categories[brandName]}
+              brandName={brandName}
+            />
+          ))}
+        </ProductsCol>
+      </Container>
     </>
   );
 }
@@ -46,6 +87,7 @@ export async function getServerSideProps() {
     }
   });
 
+  console.log(Object.keys(categories).map((ca) => ca.length));
   // Pass data to the page via props
   return { props: { categories } };
 }
