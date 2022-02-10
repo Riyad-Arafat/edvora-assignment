@@ -1,23 +1,58 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import React from "react";
 import { Product } from "../../types/product";
+import {
+  BrandName,
+  Card,
+  Footer,
+  Header,
+  Price,
+  ProductName,
+  RightSideHeader,
+  Image,
+  Location,
+  Td,
+  DateSpan,
+  Discription,
+} from "./style";
 
-const Card = styled.figure`
-  background-color: #232323;
-  width: 210px;
-  height: 150px;
-  border-radius: 4.68775px;
-`;
-const Image = styled.img`
-  width: 70px;
-  height: 70px;
-  border-radius: 5px;
-`;
 export const ProductCard = ({ product }: { product: Product }) => {
+  const { date: time } = product;
+  const NewDate = new Date(time);
+  const date =
+    NewDate.getDate() + "-" + NewDate.getMonth() + "-" + NewDate.getFullYear();
   return (
     <Card>
-      <Image src={product.image} alt={product.product_name} />
-      <figcaption>{product.discription}</figcaption>
+      <Header>
+        <div>
+          <Image
+            src={product.image}
+            alt={product.product_name}
+            width={70}
+            height={70}
+          />
+        </div>
+        <RightSideHeader>
+          <ProductName>{product.product_name}</ProductName>
+          <BrandName>{product.brand_name}</BrandName>
+          <Price>$ {product.price}</Price>
+        </RightSideHeader>
+      </Header>
+
+      <Footer>
+        <table>
+          <tbody>
+            <tr>
+              <Location>
+                {product.address.state} {product.address.city}
+              </Location>
+              <Td>
+                Date: <DateSpan>{date}</DateSpan>
+              </Td>
+            </tr>
+          </tbody>
+        </table>
+        <Discription>{product.discription}</Discription>
+      </Footer>
     </Card>
   );
 };
