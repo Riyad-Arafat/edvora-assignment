@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Filter } from "../src/components/filter";
+import { NoneProducts } from "../src/components/NoneProducts";
 import { ProductCard } from "../src/components/productCard";
 import { ProductsSlider, SmallViewContainer } from "../src/components/slider";
 import { Product } from "../src/types/product";
@@ -57,6 +58,27 @@ export default function Home({ categories, products, ...props }: Props) {
     }
   };
 
+  const ProductsView = useMemo(() => {
+    if (products.length === 0) return <NoneProducts />;
+    if (result.length === 0 && !isSearching)
+      return Object.keys(categories).map((brandName, index) => (
+        <ProductsSlider
+          key={index}
+          products={categories[brandName]}
+          brandName={brandName}
+        />
+      ));
+    else if (result.length === 0) return <NoneProducts />;
+    else
+      return (
+        <SmallViewContainer>
+          {result.map((prod, index) => (
+            <ProductCard key={index} product={prod} />
+          ))}
+        </SmallViewContainer>
+      );
+  }, [result, products, categories]);
+
   return (
     <>
       <Container>
@@ -80,21 +102,8 @@ export default function Home({ categories, products, ...props }: Props) {
           >
             Products
           </h2>
-          {result.length === 0 && !isSearching ? (
-            Object.keys(categories).map((brandName, index) => (
-              <ProductsSlider
-                key={index}
-                products={categories[brandName]}
-                brandName={brandName}
-              />
-            ))
-          ) : (
-            <SmallViewContainer>
-              {result.map((prod, index) => (
-                <ProductCard key={index} product={prod} />
-              ))}
-            </SmallViewContainer>
-          )}
+
+          {ProductsView}
         </ProductsCol>
       </Container>
     </>
