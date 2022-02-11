@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -38,6 +38,7 @@ export const SmallViewContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  justify-content: center;
 `;
 
 export const ProductsSlider = React.memo(
@@ -53,7 +54,7 @@ export const ProductsSlider = React.memo(
       setClasses({ nextBtn, prevBtn });
     }, []);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
       setwindowSize(window.innerWidth);
       window.addEventListener("resize", () => {
         setwindowSize(innerWidth);

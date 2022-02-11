@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Title = styled.h1`
   font-size: 50px;
   margin-top: 0;
+  padding-inline-start: 10;
 `;
 
 export const Container = styled.main`
