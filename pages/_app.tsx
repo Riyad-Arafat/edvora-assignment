@@ -14,6 +14,26 @@ export const GlobalStyles = createGlobalStyle`
     padding-top: 40px;
   }
 
+  /* width */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: none; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
   .swiper{
     width: 95%;
     background-color: #131313;
