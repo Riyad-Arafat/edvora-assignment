@@ -1,5 +1,4 @@
 import { useState } from "react";
-import styled from "styled-components";
 import { Filter } from "../../src/components/filter";
 import { ProductCard } from "../../src/components/productCard";
 import {
@@ -7,43 +6,12 @@ import {
   SmallViewContainer,
 } from "../../src/components/slider";
 import { Product } from "../../src/types/product";
-
-const Title = styled.h1`
-  font-size: 50px;
-  margin-top: 0;
-`;
-
-const Container = styled.main`
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  @media (max-width: 1380px) {
-    flex-direction: column;
-  }
-`;
-
-const FilterCol = styled.div`
-  position: relative;
-  width: 25%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  @media (max-width: 1380px) {
-    width: 100%;
-    display: block;
-  }
-`;
-
-const ProductsCol = styled.div`
-  position: relative;
-  width: 75%;
-  @media (max-width: 1380px) {
-    width: 100%;
-  }
-`;
+import {
+  Container,
+  FilterCol,
+  ProductsCol,
+  Title,
+} from "../../src/types/style";
 
 type Categories = {
   [key: string]: Product[];
@@ -59,7 +27,6 @@ type Props = {
 
 export default function Products({ categories, products, ...props }: Props) {
   const [result, setResult] = useState<Product[]>([]);
-  const [state, setstate] = useState<string>("");
   const [isSearching, setIsSearching] = useState<boolean>(false);
 
   const filter = (
