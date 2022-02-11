@@ -32,12 +32,12 @@ const Brand = styled.div`
   }
 `;
 
-const SmallViewContainer = styled.div`
-  background-color: #000;
+export const SmallViewContainer = styled.div`
+  background-color: #131313;
+  border-radius: 15px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: center;
 `;
 
 export const ProductsSlider = React.memo(
@@ -54,10 +54,8 @@ export const ProductsSlider = React.memo(
     }, []);
 
     useLayoutEffect(() => {
-      console.log("1047");
       setwindowSize(window.innerWidth);
       window.addEventListener("resize", () => {
-        console.log("resdasf");
         setwindowSize(innerWidth);
       });
       setLoading(false);
@@ -90,8 +88,6 @@ export const ProductsSlider = React.memo(
               prevEl: `.${classes?.prevBtn}`,
             }}
             modules={[FreeMode, Navigation]}
-            className="mySwiper"
-            onSwiper={(props) => console.log({ props })}
           >
             {products.map((prod, index) => (
               <SwiperSlide key={index}>

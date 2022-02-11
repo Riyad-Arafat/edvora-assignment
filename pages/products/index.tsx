@@ -1,7 +1,11 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Filter } from "../../src/components/filter";
-import { ProductsSlider } from "../../src/components/slider";
+import { ProductCard } from "../../src/components/productCard";
+import {
+  ProductsSlider,
+  SmallViewContainer,
+} from "../../src/components/slider";
 import { Product } from "../../src/types/product";
 
 const Title = styled.h1`
@@ -45,26 +49,84 @@ type Categories = {
   [key: string]: Product[];
 };
 
-export default function Products({ categories }: { categories: Categories }) {
-  useEffect(() => {
-    console.log(categories);
-  });
+type Props = {
+  products: Product[];
+  categories: Categories;
+  brands: string[];
+  cities: string[];
+  states: string[];
+};
+
+export default function Products({ categories, products, ...props }: Props) {
+  const [result, setResult] = useState<Product[]>([]);
+  const [state, setstate] = useState<string>("");
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+
+  const filter = (
+    by: "product_name" | "brand_name" | "city" | "state",
+    value: string
+  ) => {
+    let res: Product[] = [];
+    if (result.length > 0) res = result;
+    else res = products;
+    console.log({ res, result, products });
+
+    if (by !== "city" && by !== "state")
+      return res.filter((prod) =>
+        String(prod[by]).toLowerCase().match(value.toLowerCase()) ? prod : false
+      );
+    else
+      return res.filter((prod) =>
+        String(prod.address[by]).toLowerCase().match(value.toLowerCase())
+          ? prod
+          : false
+      );
+  };
+
+  const handelSearch = (
+    type: "product_name" | "brand_name" | "city" | "state",
+    value: string
+  ) => {
+    console.log({ type, value });
+    if (value) {
+      setResult(filter(type, value));
+      setIsSearching(true);
+    }
+    if (!value) {
+      setResult([]);
+      setIsSearching(false);
+    }
+  };
+
   return (
     <>
       <Container>
         <FilterCol>
-          <Filter />
+          <Filter
+            onSearchChange={(value) => handelSearch("product_name", value)}
+            onBrandChange={(value) => handelSearch("brand_name", value)}
+            onCityChange={(value) => handelSearch("city", value)}
+            onStateChange={(value) => handelSearch("state", value)}
+            {...props}
+          />
         </FilterCol>
         <ProductsCol>
           <Title>Products</Title>
-
-          {Object.keys(categories).map((brandName, index) => (
-            <ProductsSlider
-              key={index}
-              products={categories[brandName]}
-              brandName={brandName}
-            />
-          ))}
+          {result.length === 0 && !isSearching ? (
+            Object.keys(categories).map((brandName, index) => (
+              <ProductsSlider
+                key={index}
+                products={categories[brandName]}
+                brandName={brandName}
+              />
+            ))
+          ) : (
+            <SmallViewContainer>
+              {result.map((prod, index) => (
+                <ProductCard key={index} product={prod} />
+              ))}
+            </SmallViewContainer>
+          )}
         </ProductsCol>
       </Container>
     </>
@@ -78,16 +140,21 @@ export async function getServerSideProps() {
   const products = await res.json();
 
   let categories: Categories = {};
+  let brands: string[] = [];
+  let cities: string[] = [];
+  let states: string[] = [];
 
   products.forEach((prod: Product) => {
     if (!categories[prod.brand_name]) {
       categories[prod.brand_name] = [prod];
+      brands.push(prod.brand_name);
     } else {
       categories[prod.brand_name] = [...categories[prod.brand_name], prod];
     }
+    if (!cities.includes(prod.address.city)) cities.push(prod.address.city);
+    if (!cities.includes(prod.address.state)) states.push(prod.address.state);
   });
 
-  console.log(Object.keys(categories).map((ca) => ca.length));
   // Pass data to the page via props
-  return { props: { categories } };
+  return { props: { products, categories, brands, cities, states } };
 }

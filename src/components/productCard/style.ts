@@ -63,14 +63,14 @@ export const Header = styled.div`
   font-weight: normal;
 `;
 
-export const Td = styled.td`
+export const Td = styled.div`
   font-size: 13px;
   line-height: 16px;
   color: rgba(255, 255, 255, 0.6);
   white-space: nowrap;
 `;
 
-export const Location = styled.td`
+export const Location = styled.div`
   font-size: 13px;
   line-height: 16px;
   color: rgba(255, 255, 255, 0.6);

@@ -7,100 +7,75 @@ import {
   SearchInput,
 } from "./style";
 
-export const Filter = () => {
+type OnChange = (input: string) => void;
+
+type FilterProps = {
+  onSearchChange: OnChange;
+  onBrandChange: OnChange;
+  onCityChange: OnChange;
+  onStateChange: OnChange;
+  brands: string[];
+  cities: string[];
+  states: string[];
+};
+
+export const Filter = ({
+  onSearchChange,
+  onBrandChange,
+  onCityChange,
+  onStateChange,
+  brands,
+  cities,
+  states,
+}: FilterProps) => {
   return (
     <Container>
-      <SearchInput placeholder="Filter" />
+      <SearchInput
+        placeholder="Filter"
+        name="filter"
+        onChange={(e) => onSearchChange(e.currentTarget.value)}
+      />
       <br />
-      <Brand />
-      <State />
-      <City />
+      <DropDown
+        onChange={(brand) => onBrandChange(brand)}
+        Items={brands}
+        name="Brand"
+      />
+      <DropDown
+        onChange={(city) => onCityChange(city)}
+        Items={cities}
+        name="City"
+      />
+      <DropDown
+        onChange={(state) => onStateChange(state)}
+        Items={states}
+        name="State"
+      />
     </Container>
   );
 };
 
-const Brand = () => {
-  const [brandOpen, setBrandOpen] = useState(false);
-  return (
-    <div>
-      <DropDownButton onClick={() => setBrandOpen(!brandOpen)}>
-        <span>Brand</span>
-        <span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width={12}
-            height={10}
-            viewBox="0 0 12 10"
-            fill="none"
-          >
-            <path
-              d="M6.09409 9.19L0.816466 0.0488873L11.3717 0.0488864L6.09409 9.19Z"
-              fill="#A5A5A5"
-            />
-          </svg>
-        </span>
-      </DropDownButton>
-      <DropDownMenu className={`expandable ${brandOpen ? "active" : ""}`}>
-        <div style={{ width: "100%" }}>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-        </div>
-      </DropDownMenu>
-    </div>
-  );
-};
+const DropDown = ({
+  onChange,
+  Items,
+  name,
+}: {
+  onChange: OnChange;
+  Items: string[];
+  name: string;
+}) => {
+  const [open, setOpen] = useState(false);
+  const [item, setItem] = useState(name);
 
-const State = () => {
-  const [brandOpen, setBrandOpen] = useState(false);
-  return (
-    <div>
-      <DropDownButton onClick={() => setBrandOpen(!brandOpen)}>
-        <span>Brand</span>
-        <span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width={12}
-            height={10}
-            viewBox="0 0 12 10"
-            fill="none"
-          >
-            <path
-              d="M6.09409 9.19L0.816466 0.0488873L11.3717 0.0488864L6.09409 9.19Z"
-              fill="#A5A5A5"
-            />
-          </svg>
-        </span>
-      </DropDownButton>
-      <DropDownMenu className={`expandable ${brandOpen ? "active" : ""}`}>
-        <div style={{ width: "100%" }}>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-        </div>
-      </DropDownMenu>
-    </div>
-  );
-};
+  const handelChange = (value: string) => {
+    setItem(value);
+    onChange(value);
+  };
 
-const City = () => {
-  const [brandOpen, setBrandOpen] = useState(false);
   return (
     <div>
-      <DropDownButton onClick={() => setBrandOpen(!brandOpen)}>
-        <span>Brand</span>
+      <DropDownButton onClick={() => setOpen(!open)}>
+        <span>{item}</span>
         <span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -116,17 +91,13 @@ const City = () => {
           </svg>
         </span>
       </DropDownButton>
-      <DropDownMenu className={`expandable ${brandOpen ? "active" : ""}`}>
+      <DropDownMenu className={`expandable ${open ? "active" : ""}`}>
         <div style={{ width: "100%" }}>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
-          <DropDownItem>dsgmkorg</DropDownItem>
+          {Items.map((item, index) => (
+            <DropDownItem key={index} onClick={() => handelChange(item)}>
+              {item}
+            </DropDownItem>
+          ))}
         </div>
       </DropDownMenu>
     </div>

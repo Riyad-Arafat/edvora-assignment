@@ -10,8 +10,8 @@ export const GlobalStyles = createGlobalStyle`
     position: relative;
     color: #fff;
     height: 100vh;
-    /* width: 100vw; */
     overflow-x: hidden;
+    padding-top: 40px;
   }
 
   .swiper{
@@ -42,7 +42,7 @@ export const GlobalStyles = createGlobalStyle`
 
   }
 
-  .d-flex{
+  .dflex{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;

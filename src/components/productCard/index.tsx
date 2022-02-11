@@ -39,7 +39,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
       </Header>
 
       <Footer>
-        <div className="d-flex">
+        <div className="dflex">
           <Location>
             {product.address.state} {product.address.city}
           </Location>
