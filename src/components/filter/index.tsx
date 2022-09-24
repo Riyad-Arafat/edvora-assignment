@@ -14,9 +14,9 @@ type FilterProps = {
   onBrandChange: OnChange;
   onCityChange: OnChange;
   onStateChange: OnChange;
-  brands: string[];
-  cities: string[];
-  states: string[];
+  brands?: string[];
+  cities?: string[];
+  states?: string[];
 };
 
 export const Filter = ({
@@ -38,17 +38,17 @@ export const Filter = ({
       <br />
       <DropDown
         onChange={(brand) => onBrandChange(brand)}
-        Items={brands}
+        Items={brands || []}
         name="Brand"
       />
       <DropDown
         onChange={(city) => onCityChange(city)}
-        Items={cities}
+        Items={cities || []}
         name="City"
       />
       <DropDown
         onChange={(state) => onStateChange(state)}
-        Items={states}
+        Items={states || []}
         name="State"
       />
     </Container>
@@ -61,7 +61,7 @@ const DropDown = ({
   name,
 }: {
   onChange: OnChange;
-  Items: string[];
+  Items: string[] | [];
   name: string;
 }) => {
   const [open, setOpen] = useState(false);
