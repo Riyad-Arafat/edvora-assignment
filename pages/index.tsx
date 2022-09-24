@@ -11,11 +11,11 @@ type Categories = {
 };
 
 type Props = {
-  products: Product[];
-  categories: Categories;
-  brands: string[];
-  cities: string[];
-  states: string[];
+  products?: Product[];
+  categories?: Categories;
+  brands?: string[];
+  cities?: string[];
+  states?: string[];
 };
 
 export default function Home({ categories, products, ...props }: Props) {
@@ -28,8 +28,7 @@ export default function Home({ categories, products, ...props }: Props) {
   ) => {
     let res: Product[] = [];
     if (result.length > 0) res = result;
-    else res = products;
-    console.log({ res, result, products });
+    else res = products ?? [];
 
     if (by !== "city" && by !== "state")
       return res.filter((prod) =>
@@ -59,8 +58,8 @@ export default function Home({ categories, products, ...props }: Props) {
   };
 
   const ProductsView = useMemo(() => {
-    if (products.length === 0) return <NoneProducts />;
-    if (result.length === 0 && !isSearching)
+    if (!!products && products.length === 0) return <NoneProducts />;
+    if (result.length === 0 && !isSearching && !!categories)
       return Object.keys(categories).map((brandName, index) => (
         <ProductsSlider
           key={index}
@@ -112,26 +111,30 @@ export default function Home({ categories, products, ...props }: Props) {
 
 // This gets called on every request
 export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(`https://assessment-edvora.herokuapp.com/`);
-  const products = await res.json();
+  try {
+    // Fetch data from external API
+    const res = await fetch(`https://assessment-edvora.herokuapp.com/`);
+    const products = await res.json();
 
-  let categories: Categories = {};
-  let brands: string[] = [];
-  let cities: string[] = [];
-  let states: string[] = [];
+    let categories: Categories = {};
+    let brands: string[] = [];
+    let cities: string[] = [];
+    let states: string[] = [];
 
-  products.forEach((prod: Product) => {
-    if (!categories[prod.brand_name]) {
-      categories[prod.brand_name] = [prod];
-      brands.push(prod.brand_name);
-    } else {
-      categories[prod.brand_name] = [...categories[prod.brand_name], prod];
-    }
-    if (!cities.includes(prod.address.city)) cities.push(prod.address.city);
-    if (!cities.includes(prod.address.state)) states.push(prod.address.state);
-  });
+    products.forEach((prod: Product) => {
+      if (!categories[prod.brand_name]) {
+        categories[prod.brand_name] = [prod];
+        brands.push(prod.brand_name);
+      } else {
+        categories[prod.brand_name] = [...categories[prod.brand_name], prod];
+      }
+      if (!cities.includes(prod.address.city)) cities.push(prod.address.city);
+      if (!cities.includes(prod.address.state)) states.push(prod.address.state);
+    });
 
-  // Pass data to the page via props
-  return { props: { products, categories, brands, cities, states } };
+    // Pass data to the page via props
+    return { props: { products, categories, brands, cities, states } };
+  } catch (error) {
+    return { props: {} };
+  }
 }
